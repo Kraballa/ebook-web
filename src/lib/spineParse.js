@@ -9,6 +9,7 @@ async function parseSpine(file) {
         let contentFile = '';
         JSZip.loadAsync(binaryData).then(function (zip) {
             ebookZip.update(() => zip);
+            console.log(Object.keys(zip).length);
             zip.file("META-INF/container.xml").async("string").then(function (data) {
                 // parse content.opf path from epub entry point
                 contentFile = parseContentFilePath(data);
@@ -16,7 +17,7 @@ async function parseSpine(file) {
 
                 // parse chapter files from content.opf
                 zip.file(contentFile).async("string").then(function(data){
-                    chapterList.update(() => parseChapterList(data));
+                    chapterList.update(() => parseChapterList(data, getBasePath(contentFile)));
                 })
             })
             
@@ -33,10 +34,32 @@ function parseContentFilePath(data) {
     return doc.getElementsByTagName("rootfile")[0].getAttribute("full-path");
 }
 
-function parseChapterList(data) {
+function parseChapterList(data, basePath) {
     let parser = new DOMParser();
     let doc = parser.parseFromString(data,"text/xml");
-    return Array.from(doc.getElementsByTagName("itemref")).map((elem) => elem.getAttribute("idref"));
+    // get the chapter references in spine order
+    let itemIds = Array.from(doc.getElementsByTagName("itemref")).map((elem) => elem.getAttribute("idref"));
+    let itemById = {};
+    // build a dict of all xhtml element ids with their mappings
+    Array.from(doc.getElementsByTagName("item")).forEach((elem)=>{
+        if(elem.getAttribute("media-type") === "application/xhtml+xml"){
+            itemById[elem.getAttribute("id")] = basePath + elem.getAttribute("href");
+        }
+    });
+    // map spine elements onto manifest elements
+    return itemIds.map((item) => itemById[item]);
+}
+
+// item paths are relative to content file so extract base path
+function getBasePath(contentPath){
+    console.log("content file located in", contentPath)
+    let basePath = "";
+    let lastSlash = contentPath.lastIndexOf('/');
+    if(lastSlash != -1){
+        basePath = contentPath.substring(0,lastSlash+1);
+    }
+    console.log("base path:",basePath);
+    return basePath;
 }
 
 export { parseSpine };
