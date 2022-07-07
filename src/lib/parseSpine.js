@@ -1,5 +1,5 @@
 import JSZip from "jszip";
-import { ebookZip, contentPath, chapterList } from "./stores";
+import { contentPath, chapterList } from "./stores";
 
 async function parseSpine(file) {
     let reader = new FileReader();
@@ -7,8 +7,6 @@ async function parseSpine(file) {
         let binaryData = event.target.result;
         let contentFile = '';
         JSZip.loadAsync(binaryData).then(function (zip) {
-            ebookZip.update(() => zip);
-            console.log(Object.keys(zip).length);
             zip.file("META-INF/container.xml").async("string").then(function (data) {
                 // parse content.opf path from epub entry point
                 contentFile = parseContentFilePath(data);
@@ -51,13 +49,11 @@ function parseChapterList(data, basePath) {
 
 // item paths are relative to content file so extract base path
 function getBasePath(contentPath){
-    console.log("content file located in", contentPath)
     let basePath = "";
     let lastSlash = contentPath.lastIndexOf('/');
     if(lastSlash != -1){
         basePath = contentPath.substring(0,lastSlash+1);
     }
-    console.log("base path:",basePath);
     return basePath;
 }
 

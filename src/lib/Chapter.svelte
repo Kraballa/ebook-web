@@ -1,6 +1,26 @@
 <script>
+    import { chapterContent, currentChapter, ebookFile } from "./stores";
+    import { loadChapter } from "./loadChapter";
+
+    let chapterPath = "";
+    let content = "";
+
+    let file = "";
+    ebookFile.subscribe((f) => (file = f));
+
+    currentChapter.subscribe((chap) => {
+        chapterPath = chap;
+        if (chap != "") {
+            loadChapter(chap, file);
+        }
+    });
+
+    chapterContent.subscribe((cont) => content = cont);
 </script>
 
-<div>
-    <h1>This is a Chapter</h1>
-</div>
+{#if chapterPath != ""}
+    <div>
+        trying to render {chapterPath}
+    </div>
+{/if}
+{@html content}
