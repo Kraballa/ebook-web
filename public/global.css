@@ -1,0 +1,29 @@
+* {
+    font-family: sans-serif;
+}
+
+div.paragraph {
+    text-align: justify;
+}
+
+div.row {
+    max-width: 640px;
+    margin: auto;
+}
+
+.center {
+    margin: auto;
+}
+
+p.green {
+    color: rgb(113, 146, 55);
+}
+
+html {
+    background-color: rgb(218, 236, 247);
+    color: rgb(36, 37, 48);
+}
+
+h1.bookTitle {
+    text-align: center;
+}
