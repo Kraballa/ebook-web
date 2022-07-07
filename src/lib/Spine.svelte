@@ -1,5 +1,5 @@
 <script>
-    import { chapterList, contentPath, ebookFile } from "./stores";
+    import { chapterList, contentPath, currentChapter, ebookFile } from "./stores";
 
     let fileName = "";
     let content = "";
@@ -11,6 +11,11 @@
     chapterList.subscribe((f) => {
         chapters = f;
     });
+
+    function chapterSelect(chap){
+        currentChapter.update(() => chap);
+    }
+
 </script>
 
 <div>
@@ -20,11 +25,9 @@
     <h1 class="bookTitle">{fileName.slice(0, -5)}</h1>
 {/if}
 {#if chapters != []}
-<ul>
-    {#each chapters as chap}
-        <li>
-            {chap}
-        </li>
-    {/each}
-</ul>
+{#each chapters as chap}
+    <button on:click={chapterSelect(chap)}>
+        {chap}
+    </button>
+{/each}
 {/if}
