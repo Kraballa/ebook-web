@@ -1,6 +1,6 @@
 <script>
     import { parseSpine } from "./parseSpine";
-    import { ebookFile } from "./stores";
+    import { chapterContent, currentChapter, ebookFile } from "./stores";
 
     let files;
     let fileName = "";

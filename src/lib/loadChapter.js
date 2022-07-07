@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify';
 import JSZip from 'jszip'
 import {chapterContent} from './stores'
 
@@ -10,7 +11,7 @@ async function loadChapter(path, file) {
         JSZip.loadAsync(binaryData).then(function (zip) {
 
             zip.file(path).async("string").then(function (data){
-                chapterContent.update(() => data);
+                chapterContent.update(() => DOMPurify.sanitize(data, { USE_PROFILES: { html: true } }));
             })
 
         }).catch(function (err) {
