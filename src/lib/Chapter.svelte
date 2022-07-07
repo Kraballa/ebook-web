@@ -15,12 +15,19 @@
         }
     });
 
-    chapterContent.subscribe((cont) => content = cont);
+    chapterContent.subscribe((cont) => (content = cont));
 </script>
 
-{#if chapterPath != ""}
-    <div>
-        trying to render {chapterPath}
-    </div>
+{#if content != ""}
+    <p>{@html content}</p>
 {/if}
-{@html content}
+
+<!--styling the content inside html-->
+<style>
+    p :global(div) {
+        text-align: justify;
+    }
+    p :global(p) {
+        text-align: justify;
+    }
+</style>

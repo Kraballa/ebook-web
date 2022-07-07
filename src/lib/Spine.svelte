@@ -22,16 +22,17 @@
     }
 </script>
 
-{#if content != ""}
-    <div>
-        content path: {content}
-    </div>
-{/if}
 {#if fileName != ""}
-    <h1 class="bookTitle">{fileName.slice(0, -5)}</h1>
+    <h1 class="bookTitle">{fileName}</h1>
 {/if}
 {#if chapters != []}
-    {#each chapters as chap}
+    {#each chapters as chap, i}
         <input type="button" value={chap} on:click={chapterSelect(chap)} />
     {/each}
 {/if}
+
+<style>
+    h1.bookTitle {
+        text-align: center;
+    }
+</style>
