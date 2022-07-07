@@ -3,6 +3,7 @@
         chapterList,
         contentPath,
         currentChapter,
+        currentChapterIndex,
         ebookFile,
     } from "./stores";
 
@@ -17,8 +18,9 @@
         chapters = f;
     });
 
-    function chapterSelect(chap) {
+    function chapterSelect(chap, index) {
         currentChapter.update(() => chap);
+        currentChapterIndex.update(() => index);
     }
 </script>
 
@@ -27,7 +29,7 @@
 {/if}
 {#if chapters != []}
     {#each chapters as chap, i}
-        <input type="button" value={chap} on:click={chapterSelect(chap)} />
+        <input type="button" value={i} on:click={chapterSelect(chap, i)} />
     {/each}
 {/if}
 
