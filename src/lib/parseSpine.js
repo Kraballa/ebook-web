@@ -1,5 +1,4 @@
 import JSZip from "jszip";
-import fs from "fs";
 import { ebookZip, contentPath, chapterList } from "./stores";
 
 async function parseSpine(file) {

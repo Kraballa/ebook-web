@@ -1,5 +1,5 @@
 <script>
-    import {parseSpine} from './spineParse';
+    import {parseSpine} from './parseSpine';
     import { ebookFile } from './stores';
 
     let files;
