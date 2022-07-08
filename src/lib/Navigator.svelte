@@ -31,16 +31,32 @@
 </script>
 
 <div>
-    <input type="button" value="previous chapter" on:click={previousChapter} />
+    <span><input type="button" class="navigation" value="previous chapter" on:click={previousChapter} /></span>
     {#if chapterIndex != -1}
-        {chapterIndex}
+        <span>{chapterIndex}</span>
     {/if}
-    <input type="button" value="next chapter" on:click={nextChapter} />
+    
+    <span><input type="button" class="navigation" value="next chapter" on:click={nextChapter} /></span>
 </div>
 
 <style>
     div {
         text-align: center;
         display: block;
+    }
+
+    span {
+        padding: 10px;
+    }
+
+    input.navigation {
+        border-radius: 0px;
+        border-width: 1px;
+        width: 150px;
+        height: 28px;
+    }
+
+    input.navigation:hover {
+        background-color: rgb(217, 217, 217);
     }
 </style>

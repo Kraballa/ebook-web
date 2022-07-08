@@ -7,9 +7,7 @@
 
 <div class="row bg">
     <LoadEpub />
-    <hr />
     <Spine />
-    <hr />
     <Navigator />
     <Chapter />
     <hr />
