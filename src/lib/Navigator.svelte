@@ -1,42 +1,45 @@
 <script>
-    import { chapterList, currentChapterIndex } from "./stores";
-
-    let chapterIndex = -1;
-    let chapterNames = [];
-
-    chapterList.subscribe((vals) => (chapterNames = vals));
-    currentChapterIndex.subscribe((val) => (chapterIndex = val));
+    export let chapterIndex = 0;
+    export let epubChapters = [];
 
     function nextChapter() {
-        currentChapterIndex.update(() => {
-            if (chapterIndex == -1) {
-                return 0;
-            } else if (chapterIndex < chapterNames.length - 1) {
-                return chapterIndex + 1;
-            }
-            return chapterIndex;
-        });
+        if (chapterIndex == -1) {
+            chapterIndex = 0;
+        } else if (chapterIndex < epubChapters.length - 1) {
+            chapterIndex++;
+        }
     }
 
     function previousChapter() {
-        currentChapterIndex.update(() => {
-            if (chapterIndex == -1) {
-                return 0;
-            } else if (chapterIndex > 0) {
-                return chapterIndex - 1;
-            }
-            return chapterIndex;
-        });
+        if (chapterIndex == -1) {
+            chapterIndex = 0;
+        } else if (chapterIndex > 0) {
+            chapterIndex--;
+        }
     }
 </script>
 
 <div>
-    <span><input type="button" class="navigation" value="previous chapter" on:click={previousChapter} /></span>
+    <span
+        ><input
+            type="button"
+            class="navigation"
+            value="previous chapter"
+            on:click={previousChapter}
+        /></span
+    >
     {#if chapterIndex != -1}
         <span>{chapterIndex}</span>
     {/if}
-    
-    <span><input type="button" class="navigation" value="next chapter" on:click={nextChapter} /></span>
+
+    <span
+        ><input
+            type="button"
+            class="navigation"
+            value="next chapter"
+            on:click={nextChapter}
+        /></span
+    >
 </div>
 
 <style>

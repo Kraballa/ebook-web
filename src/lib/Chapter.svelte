@@ -1,32 +1,23 @@
 <script>
-    import {
-        chapterList,
-        currentChapter,
-        currentChapterIndex,
-        ebookFile,
-    } from "./stores";
     import { loadChapter } from "./loadChapter";
 
+    export let epubZip = null;
+    export let epubChapters = [];
+    export let chapterIndex = 0;
+
     let content = null;
-    let file = null;
-    let chapters = [];
 
-    chapterList.subscribe((cont) => (chapters = cont));
-
-    ebookFile.subscribe((f) => (file = f));
-
-    currentChapter.subscribe(async (chap) => {
-        content = await loadChapter(chap, file);
-    });
-
-    currentChapterIndex.subscribe(async (index) => {
-        if (index > -1 && index < chapters.length) {
-            content = await loadChapter(chapters[index], file);
+    $: {
+        if (epubZip !== null && epubChapters.length > 0 && chapterIndex > -1) {
+            reloadContent();
         }
-    });
+    }
+
+    async function reloadContent() {
+        content = await loadChapter(epubZip, epubChapters[chapterIndex]);
+    }
 </script>
 
-<!--This *should* be safe as content already has been cleaned-->
 {#if content}
     <p>{@html content}</p>
 {/if}

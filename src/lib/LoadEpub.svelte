@@ -1,12 +1,9 @@
 <script>
-    import { parseSpine } from "./parseSpine";
-    import { ebookFile } from "./stores";
-
-    let files;
+    export let epubFile;
+    let files = [];
     $: {
         if (files && files[0]) {
-            ebookFile.update(() => files[0]);
-            parseSpine(files[0]);
+            epubFile = files[0];
         }
     }
 

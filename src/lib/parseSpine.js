@@ -1,35 +1,13 @@
-import JSZip from "jszip";
-import { contentPath, chapterList, currentChapterIndex } from "./stores";
+async function parseSpine(ebookZip) {
+    let containerFile = await ebookZip.file("META-INF/container.xml").async("string");
 
-async function parseSpine(file) {
-    let reader = new FileReader();
-    reader.onload = function (event) {
-        let binaryData = event.target.result;
-        let contentFile = '';
-        JSZip.loadAsync(binaryData).then(function (zip) {
-            zip.file("META-INF/container.xml").async("string").then(function (data) {
-                // parse content.opf path from epub entry point
-                contentFile = parseContentFilePath(data);
-                contentPath.update(() => contentFile);
-
-                // parse chapter files from content.opf
-                zip.file(contentFile).async("string").then(function (data) {
-                    chapterList.update(() => parseChapterList(data, getBasePath(contentFile)));
-                    currentChapterIndex.update(() => 0);
-                })
-            })
-
-        }).catch(function (err) {
-            console.error("failed to open", file, "as zip file:", err);
-        })
-    }
-    reader.readAsArrayBuffer(file);
-}
-
-function parseContentFilePath(data) {
     let parser = new DOMParser();
-    let doc = parser.parseFromString(data, "text/xml");
-    return doc.getElementsByTagName("rootfile")[0].getAttribute("full-path");
+    let containerDoc = parser.parseFromString(containerFile, "text/xml");
+    let contentFilePath = containerDoc.getElementsByTagName("rootfile")[0].getAttribute("full-path");
+
+    let content = await ebookZip.file(contentFilePath).async("string");
+    let folderPath = getBasePath(contentFilePath);
+    return parseChapterList(content, folderPath);
 }
 
 function parseChapterList(data, basePath) {
