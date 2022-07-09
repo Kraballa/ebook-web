@@ -1,9 +1,8 @@
 <script>
     import { parseSpine } from "./parseSpine";
-    import { chapterContent, currentChapter, ebookFile } from "./stores";
+    import { ebookFile } from "./stores";
 
     let files;
-    let fileName = "";
     $: {
         if (files && files[0]) {
             ebookFile.update(() => files[0]);

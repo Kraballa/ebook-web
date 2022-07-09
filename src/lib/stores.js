@@ -7,4 +7,3 @@ export let chapterList = writable([]);
 
 export let currentChapter = writable("");
 export let currentChapterIndex = writable(-1);
-export let chapterContent = writable("");

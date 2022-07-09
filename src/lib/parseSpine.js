@@ -36,14 +36,14 @@ function parseChapterList(data, basePath) {
     let parser = new DOMParser();
     let doc = parser.parseFromString(data, "text/xml");
     // get the chapter references in spine order
-    let itemIds = Array.from(doc.getElementsByTagName("itemref")).map((elem) => elem.getAttribute("idref"));
+    let itemIds = [...doc.getElementsByTagName("itemref")].map((elem) => elem.getAttribute("idref"));
     let itemById = {};
     // build a dict of all xhtml element ids with their mappings
-    Array.from(doc.getElementsByTagName("item")).forEach((elem) => {
+    for (const elem of doc.getElementsByTagName("item")) {
         if (elem.getAttribute("media-type") === "application/xhtml+xml") {
             itemById[elem.getAttribute("id")] = basePath + elem.getAttribute("href");
         }
-    });
+    }
     // map spine elements onto manifest elements
     return itemIds.map((item) => itemById[item]);
 }
@@ -52,7 +52,7 @@ function parseChapterList(data, basePath) {
 function getBasePath(contentPath) {
     let basePath = "";
     let lastSlash = contentPath.lastIndexOf('/');
-    if (lastSlash != -1) {
+    if (lastSlash !== -1) {
         basePath = contentPath.substring(0, lastSlash + 1);
     }
     return basePath;

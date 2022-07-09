@@ -1,6 +1,5 @@
 <script>
     import {
-        chapterContent,
         chapterList,
         currentChapter,
         currentChapterIndex,
@@ -8,33 +7,27 @@
     } from "./stores";
     import { loadChapter } from "./loadChapter";
 
-    let content = "";
-    let file = "";
+    let content = null;
+    let file = null;
     let chapters = [];
 
     chapterList.subscribe((cont) => (chapters = cont));
 
     ebookFile.subscribe((f) => (file = f));
 
-    currentChapter.subscribe((chap) => {
-        if (chap != "") {
-            loadChapter(chap, file);
-        } else {
-            chapterContent.update(() => "");
-        }
+    currentChapter.subscribe(async (chap) => {
+        content = await loadChapter(chap, file);
     });
 
-    currentChapterIndex.subscribe((index) => {
+    currentChapterIndex.subscribe(async (index) => {
         if (index > -1 && index < chapters.length) {
-            loadChapter(chapters[index], file);
+            content = await loadChapter(chapters[index], file);
         }
     });
-
-    chapterContent.subscribe((cont) => (content = cont));
 </script>
 
 <!--This *should* be safe as content already has been cleaned-->
-{#if content != ""}
+{#if content}
     <p>{@html content}</p>
 {/if}
 
