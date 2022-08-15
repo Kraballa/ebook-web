@@ -28,11 +28,13 @@
 
 <div class="row bg">
     <LoadEpub bind:epubFile />
-    <Spine bind:chapterIndex bind:epubChapters />
-    <Navigator bind:chapterIndex bind:epubChapters />
-    <Chapter bind:epubZip bind:epubChapters bind:chapterIndex />
-    <hr />
-    <Navigator bind:chapterIndex bind:epubChapters />
+    {#if epubFile}
+        <Spine bind:chapterIndex bind:epubChapters />
+        <Navigator bind:chapterIndex bind:epubChapters />
+        <Chapter bind:epubZip bind:epubChapters bind:chapterIndex />
+        <hr />
+        <Navigator bind:chapterIndex bind:epubChapters />
+    {/if}
 </div>
 
 <style>
