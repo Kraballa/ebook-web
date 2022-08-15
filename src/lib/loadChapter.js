@@ -1,14 +1,20 @@
-import DOMPurify from 'dompurify';
+//import DOMPurify from 'dompurify';
 
 async function loadChapter(zip, path) {
-    let fileData = null;
     try {
-        fileData = await zip.file(path).async("string")
-        //TODO: maybe sanitize fileData
+        const dirty = await zip.file(path).async("string")
+        return sanitize(dirty);
     } catch (err) {
-        fileData = "error loading chapter: " + err
+        return "error loading chapter: " + err
     }
-    return fileData;
+}
+
+function sanitize(dirty) {
+    const doc = new DOMParser().parseFromString(dirty, 'text/html');
+
+    //do basic sanitization to stop the GET404 spam
+    [...doc.getElementsByTagName("img")].forEach((e) => e.parentElement.remove(e));
+    return new XMLSerializer().serializeToString(doc.body);
 }
 
 export { loadChapter };
