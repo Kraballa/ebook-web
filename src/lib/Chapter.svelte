@@ -19,15 +19,15 @@
 </script>
 
 {#if content}
-    <p>{@html content}</p>
+    <span>{@html content}</span>
 {/if}
 
 <!--styling the content inside html-->
 <style>
-    p :global(div) {
+    span :global(div) {
         text-align: justify;
     }
-    p :global(p) {
+    span :global(p) {
         text-align: justify;
     }
 </style>

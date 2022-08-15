@@ -20,26 +20,20 @@
 </script>
 
 <div>
-    <span
-        ><input
+    <span><input
             type="button"
             class="navigation"
             value="previous chapter"
-            on:click={previousChapter}
-        /></span
-    >
+            on:click={previousChapter}/></span>
     {#if chapterIndex != -1}
         <span>{chapterIndex}</span>
     {/if}
 
-    <span
-        ><input
+    <span><input
             type="button"
             class="navigation"
             value="next chapter"
-            on:click={nextChapter}
-        /></span
-    >
+            on:click={nextChapter}/></span>
 </div>
 
 <style>
