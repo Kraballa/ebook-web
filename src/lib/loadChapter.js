@@ -13,7 +13,7 @@ function sanitize(dirty) {
     const doc = new DOMParser().parseFromString(dirty, 'text/html');
 
     //do basic sanitization to stop the GET404 spam
-    [...doc.getElementsByTagName("img")].forEach((e) => e.parentElement.remove(e));
+    [...doc.getElementsByTagName("img")].forEach((e) => e.remove());
     return new XMLSerializer().serializeToString(doc.body);
 }
 

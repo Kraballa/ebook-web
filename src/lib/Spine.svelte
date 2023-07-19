@@ -8,9 +8,3 @@
         <input type="button" value={i} on:click={() => (chapterIndex = i)} />
     {/each}
 {/if}
-
-<style>
-    h1.bookTitle {
-        text-align: center;
-    }
-</style>
