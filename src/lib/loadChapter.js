@@ -49,7 +49,7 @@ async function handleStylesheets(doc, zip, path) {
 async function handleImages(doc, zip, path) {
     await Promise.all([...doc.querySelectorAll('img,image')].map(async (e) => {
 
-        let isImg = e.tagName === "img";
+        let isImg = e.tagName.toLowerCase() === "img";
 
         let imagePath = getPath(e.getAttribute(isImg ? 'src' : 'xlink:href'), path);
         let file = zip.file(imagePath);
