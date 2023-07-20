@@ -16,4 +16,5 @@
     <!--This is ugly but hides the even uglier file selected text-->
     <input type="file" id="selectedFile" accept=".epub" style="display: none;" bind:files />
     <input type="button" value="Open Ebook" on:click={openFileClick} />
+    <input type="button" value="Close Ebook" on:click={() => epubFile = null} />
 </div>
