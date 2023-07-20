@@ -32,7 +32,7 @@
         <Spine bind:chapterIndex bind:epubChapters />
         <Navigator bind:chapterIndex bind:epubChapters />
         <Chapter bind:epubZip bind:epubChapters bind:chapterIndex />
-        <hr />
+        <div />
         <Navigator bind:chapterIndex bind:epubChapters />
     {/if}
 </div>

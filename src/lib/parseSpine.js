@@ -23,6 +23,7 @@ function parseChapterList(data, basePath) {
         }
     }
     // map spine elements onto manifest elements
+    // return list of file paths corresponding to chapters
     return itemIds.map((item) => itemById[item]);
 }
 

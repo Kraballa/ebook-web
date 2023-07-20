@@ -8,7 +8,7 @@
     let content = null;
 
     $: {
-        if (epubZip !== null && epubChapters.length > 0 && chapterIndex > -1) {
+        if (epubZip !== null && epubChapters.length > 0 && chapterIndex > -1 && chapterIndex < epubChapters.length) {
             reloadContent();
         }
     }
