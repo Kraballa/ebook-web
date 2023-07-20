@@ -4,7 +4,7 @@
 </script>
 
 {#if epubChapters.length > 0}
-    {#each epubChapters as chap, i}
+    {#each epubChapters as _, i}
         <input type="button" value={i} on:click={() => (chapterIndex = i)} class="{chapterIndex === i ? "highlight" : ""}"/>
     {/each}
 {/if}

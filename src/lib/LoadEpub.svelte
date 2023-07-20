@@ -12,7 +12,7 @@
     }
 </script>
 
-<div style="margin-bottom: 0.5em;">
+<div style="margin-bottom: 5px;">
     <!--This is ugly but hides the even uglier file selected text-->
     <input type="file" id="selectedFile" accept=".epub" style="display: none;" bind:files />
     <input type="button" value="Open Ebook" on:click={openFileClick} />

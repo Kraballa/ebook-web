@@ -39,7 +39,8 @@
     div {
         text-align: center;
         display: block;
-        margin-top: 2em;
+        margin-top: 24px;
+        margin-bottom: 24px;
     }
 
     span {
@@ -47,12 +48,12 @@
     }
 
     input.navigation {
-        border-radius: 0px;
+        border-radius: 3px;
         border-width: 1px;
         width: 150px;
         height: 28px;
     }
-
+    
     input.navigation:hover {
         background-color: rgb(217, 217, 217);
     }
