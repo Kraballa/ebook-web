@@ -1,5 +1,6 @@
 //import DOMPurify from 'dompurify';
 
+// load a chapter file from the zip
 async function loadChapter(zip, path) {
     try {
         const dirty = await zip.file(path).async("string")
@@ -9,18 +10,30 @@ async function loadChapter(zip, path) {
     }
 }
 
+// sanitize the html, translate images, stylesheets etc to blobs
 async function sanitize(dirty, zip, path) {
     const doc = new DOMParser().parseFromString(dirty, 'text/html');
+    await handleStylesheets(doc, zip, path);
+    await handleImages(doc, zip, path);
+    handleLinks(doc);
+    return new XMLSerializer().serializeToString(doc);
+}
 
-    await Promise.all([...doc.querySelectorAll('link')].map(async (e) => {
-        if (e.getAttribute('rel') !== "stylesheet") {
-            e.remove();
-            return;
+// links are mostly going to be dead/internal so remove them
+function handleLinks(doc) {
+    //replace 'a' tags with underlined
+    [...doc.querySelectorAll('a')].forEach((e) => {
+        if (e.getAttribute("href") !== null) {
+            let newEle = doc.createElement('u');
+            newEle.innerHTML = e.innerHTML;
+            e.replaceWith(newEle);
         }
+    });
+}
 
-        // find path of stylesheet, doesn't always work
+async function handleStylesheets(doc, zip, path) {
+    await Promise.all([...doc.querySelectorAll('link')].map(async (e) => {
         let stylePath = getPath(e.getAttribute('href'), path);
-
         let file = zip.file(stylePath);
         if (file === null) {
             e.remove();
@@ -28,14 +41,17 @@ async function sanitize(dirty, zip, path) {
             return;
         }
 
-        const stylesheet = await file.async("string");
-        let blob = new Blob([stylesheet], { type: "text/css" });
-        e.href = URL.createObjectURL(blob);
+        const stylesheet = await file.async("blob");
+        e.href = URL.createObjectURL(stylesheet);
     }));
+}
 
-    // not guaranteed to find all images, sometimes images are stored in custom tags like <xs:image>
-    await Promise.all([...doc.querySelectorAll('img')].map(async (e) => {
-        let imagePath = getPath(e.getAttribute('src'), path);
+async function handleImages(doc, zip, path) {
+    await Promise.all([...doc.querySelectorAll('img,image')].map(async (e) => {
+
+        let isImg = e.tagName === "img";
+
+        let imagePath = getPath(e.getAttribute(isImg ? 'src' : 'xlink:href'), path);
         let file = zip.file(imagePath);
         if (file === null) {
             e.remove();
@@ -43,22 +59,17 @@ async function sanitize(dirty, zip, path) {
             return;
         }
 
-        const image = await file.async("blob");
-        e.src = URL.createObjectURL(image);
-    }));
-    replaceLinks(doc);
-    return new XMLSerializer().serializeToString(doc);
-}
-
-function replaceLinks(document) {
-    //replace 'a' tags with underlined
-    [...document.querySelectorAll('a')].forEach((e) => {
-        if (e.getAttribute("href") !== null) {
-            let newEle = document.createElement('u');
-            newEle.innerHTML = e.innerHTML;
-            e.replaceWith(newEle);
+        const blob = URL.createObjectURL(await file.async("blob"));
+        if (isImg) {
+            e.src = blob;
+            return;
         }
-    });
+
+        // we can't rewrite image.xlink:href so replace the image tag with an img one
+        let newEle = doc.createElement('img');
+        newEle.src = blob;
+        e.replaceWith(newEle);
+    }));
 }
 
 function getPath(href, currentPath) {
