@@ -13,7 +13,15 @@ function sanitize(dirty) {
     const doc = new DOMParser().parseFromString(dirty, 'text/html');
 
     //do basic sanitization to stop the GET404 spam
-    [...doc.getElementsByTagName("img")].forEach((e) => e.remove());
+    [...doc.querySelectorAll('img')].forEach((e) => e.remove());
+    //replace 'a' tags with underlined
+    [...doc.querySelectorAll('a')].forEach((e) => {
+        if(e.getAttribute("href") !== null && e.getAttribute("href").includes('.xhtml')){
+            var newEle = document.createElement('u');
+            newEle.innerHTML = e.innerHTML;
+            e.replaceWith(newEle);
+        }
+    });
     return new XMLSerializer().serializeToString(doc.body);
 }
 
