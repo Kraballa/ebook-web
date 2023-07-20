@@ -20,12 +20,12 @@
 </script>
 
 <div>
-    <span><input type="button" class="navigation" value="previous chapter" on:click={previousChapter} /></span>
+    <span><input type="button" class="navigation" value="previous chapter" on:click={previousChapter} disabled={chapterIndex == 0}/></span>
     {#if chapterIndex != -1}
         <span>{chapterIndex}</span>
     {/if}
 
-    <span><input type="button" class="navigation" value="next chapter" on:click={nextChapter} /></span>
+    <span><input type="button" class="navigation" value="next chapter" on:click={nextChapter} disabled={chapterIndex >= epubChapters.length -1}/></span>
 </div>
 
 <style>
