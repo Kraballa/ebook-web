@@ -38,7 +38,7 @@ async function handleStylesheets(doc, zip, path) {
         let file = zip.file(stylePath);
         if (file === null) {
             e.remove();
-            console.log('file at', stylePath, 'not found');
+            console.error('file at', stylePath, 'not found');
             return;
         }
 
@@ -57,7 +57,7 @@ async function handleImages(doc, zip, path) {
         let file = zip.file(imagePath);
         if (file === null) {
             e.remove();
-            console.log('file at', imagePath, 'not found');
+            console.error('file at', imagePath, 'not found');
             return;
         }
 
@@ -66,28 +66,44 @@ async function handleImages(doc, zip, path) {
             e.src = blob;
             return;
         }
-        
+
         // we can't rewrite image.xlink:href so replace the image tag with an img one
         let newEle = doc.createElement('img');
         newEle.src = blob;
         // <image> elements seem to be nested inside <svg> tags that have some horrible styling on them
         // for now nuke the <svg>, this might break things, potentially change back
-        if(e.parentNode.tagName.toLowerCase() === "svg"){
+        if (e.parentNode.tagName.toLowerCase() === "svg") {
             e.parentNode.replaceWith(newEle);
         }
-        else{
+        else {
             e.replaceWith(newEle);
         }
     }));
 }
 
+// either relative or absolute path
 function getPath(href, currentPath) {
-    let newPath = href;
-    if (href.startsWith('../')) {
-        // just assume it's OEBPS and if it's not just forget about it
-        newPath = 'OEBPS/' + href.slice(3);
+
+    // current chapter
+    let dirs = currentPath.split("/");
+    dirs.pop(); // remove current html file
+    
+    if (href.startsWith('../')) { // most common case
+        while (href.startsWith('../')) {
+            dirs.pop(); // step to next higher directory
+            href = href.slice(3);
+        }
+        return dirs.join("/") + "/" + href;
     }
-    return newPath;
+    else if(href.startsWith('/')){ // files are in the root
+        return href;
+    }
+    else if (href.startsWith('./')) { // never seen this case but is theoretically possible
+        return dirs.join("/") + href.slice(1);
+    }
+    else { // files are in the current directory, like previous case
+        return dirs.join("/") + "/" + href;
+    }
 }
 
 export { loadChapter };
