@@ -19,11 +19,11 @@ async function sanitize(dirty, zip, path) {
     return new XMLSerializer().serializeToString(doc);
 }
 
-// links are mostly going to be dead/internal so remove them
+// sanitize <a> tags. remove all links and replace with underlined text.
 function handleLinks(doc) {
     //replace 'a' tags with underlined
     [...doc.querySelectorAll('a')].forEach((e) => {
-        if (e.getAttribute("href") !== null) {
+        if (e.hasAttribute("href")) {
             let newEle = doc.createElement('u');
             newEle.innerHTML = e.innerHTML;
             e.replaceWith(newEle);
@@ -31,6 +31,7 @@ function handleLinks(doc) {
     });
 }
 
+// sanitize <link> tags. if they're stylesheets, replace href with blob, else remove.
 async function handleStylesheets(doc, zip, path) {
     await Promise.all([...doc.querySelectorAll('link')].map(async (e) => {
         let stylePath = getPath(e.getAttribute('href'), path);
@@ -46,6 +47,7 @@ async function handleStylesheets(doc, zip, path) {
     }));
 }
 
+// sanitize <img> and <image> tags, replace src with blobs.
 async function handleImages(doc, zip, path) {
     await Promise.all([...doc.querySelectorAll('img,image')].map(async (e) => {
 
@@ -64,11 +66,18 @@ async function handleImages(doc, zip, path) {
             e.src = blob;
             return;
         }
-
+        
         // we can't rewrite image.xlink:href so replace the image tag with an img one
         let newEle = doc.createElement('img');
         newEle.src = blob;
-        e.replaceWith(newEle);
+        // <image> elements seem to be nested inside <svg> tags that have some horrible styling on them
+        // for now nuke the <svg>, this might break things, potentially change back
+        if(e.parentNode.tagName.toLowerCase() === "svg"){
+            e.parentNode.replaceWith(newEle);
+        }
+        else{
+            e.replaceWith(newEle);
+        }
     }));
 }
 
