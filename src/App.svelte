@@ -5,6 +5,7 @@
     import Navigator from "./lib/Navigator.svelte";
     import JSZip from "jszip";
     import { parseSpine } from "./lib/parseSpine";
+    import ProgressHint from "./lib/ProgressHint.svelte";
 
     let epubFile = null;
     let epubChapters = [];
@@ -33,6 +34,7 @@
         <Navigator bind:chapterIndex bind:epubChapters />
         <Chapter bind:epubZip bind:epubChapters bind:chapterIndex />
         <Navigator bind:chapterIndex bind:epubChapters />
+        <ProgressHint bind:chapterIndex bind:epubChapters/>
     {/if}
 </div>
 
