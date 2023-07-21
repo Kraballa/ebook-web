@@ -29,7 +29,7 @@
     <span><input type="button" class="navigation" value="previous chapter" on:click={previousChapter} disabled={chapterIndex == 0}/></span>
 
     {#if chapterIndex != -1}
-        <span>{chapterIndex}</span>
+        <span>{chapterIndex+1} / {epubChapters.length}</span>
     {/if}
 
     <span><input type="button" class="navigation" value="next chapter" on:click={nextChapter} disabled={chapterIndex >= epubChapters.length -1}/></span>

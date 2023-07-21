@@ -5,12 +5,12 @@
 
 {#if epubChapters.length > 0}
     {#each epubChapters as _, i}
-        <input type="button" value={i} on:click={() => (chapterIndex = i)} class="{chapterIndex === i ? "highlight" : ""}"/>
+        <input type="button" value={i+1} on:click={() => (chapterIndex = i)} class="{chapterIndex === i ? "highlight" : ""}"/>
     {/each}
 {/if}
 
 <style>
-    input{
+    input {
         margin-right: 5px;
         margin-bottom: 5px;
     }
