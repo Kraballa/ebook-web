@@ -28,7 +28,7 @@
         font-size: 8pt;
         position: fixed;
         right: 0;
-        bottom: -4px;
+        bottom: 0;
         color: gray;
     }
 
