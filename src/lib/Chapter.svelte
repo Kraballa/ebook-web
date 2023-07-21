@@ -21,13 +21,3 @@
 {#if content}
     <span>{@html content}</span>
 {/if}
-
-<!--styling the content inside html-->
-<style>
-    span :global(div) {
-        text-align: justify;
-    }
-    span :global(p) {
-        text-align: justify;
-    }
-</style>
