@@ -93,13 +93,15 @@ function getPath(href, currentPath) {
             dirs.pop(); // step to next higher directory
             href = href.slice(3);
         }
-        return dirs.join("/") + "/" + href;
+        dirs.push(href);
+        return dirs.join("/");
     }
     else if(href.startsWith('/')){ // files are in the root
-        return href;
+        return href.slice(1);
     }
     else if (href.startsWith('./')) { // never seen this case but is theoretically possible
-        return dirs.join("/") + href.slice(1);
+        dirs.push(href.slice(2));
+        return dirs.join("/");
     }
     else { // files are in the current directory, like previous case
         return dirs.join("/") + "/" + href;
