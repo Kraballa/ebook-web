@@ -104,7 +104,8 @@ function getPath(href, currentPath) {
         return dirs.join("/");
     }
     else { // files are in the current directory, like previous case
-        return dirs.join("/") + "/" + href;
+        dirs.push(href);
+        return dirs.join("/");
     }
 }
 
