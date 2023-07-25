@@ -20,9 +20,9 @@
     }
 
     async function loadFile() {
+        chapterIndex = 0;
         const buf = epubFile.arrayBuffer();
         epubZip = await JSZip.loadAsync(buf);
-        chapterIndex = 0;
         epubChapters = await parseSpine(epubZip);
     }
 </script>

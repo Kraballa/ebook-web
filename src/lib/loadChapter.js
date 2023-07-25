@@ -70,8 +70,8 @@ async function handleImages(doc, zip, path) {
         // we can't rewrite image.xlink:href so replace the image tag with an img one
         let newEle = doc.createElement('img');
         newEle.src = blob;
-        // <image> elements seem to be nested inside <svg> tags that have some horrible styling on them
-        // for now nuke the <svg>, this might break things, potentially change back
+        // fix image width and break out of parent svg to prevent styling issues.
+        newEle.style = "width: 100%;";
         if (e.parentNode.tagName.toLowerCase() === "svg") {
             e.parentNode.replaceWith(newEle);
         }
