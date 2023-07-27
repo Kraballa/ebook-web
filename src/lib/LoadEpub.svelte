@@ -19,5 +19,13 @@
     {#if epubFile !== null}
         <input type="button" value="close ebook" on:click={() => (epubFile = null)} />
     {/if}
-    <a style="float: right;" href="https://github.com/Kraballa/ebook-web">github repo</a>
+    <a class="right" href="https://kraballa.net">home</a>
+    <a class="right" href="https://github.com/Kraballa/ebook-web">github repo</a>
 </div>
+
+<style>
+    a.right {
+        float: right;
+        margin-right: 8px;
+    }
+</style>
