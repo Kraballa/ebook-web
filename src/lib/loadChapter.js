@@ -1,5 +1,3 @@
-//import DOMPurify from 'dompurify';
-
 // load a chapter file from the zip
 async function loadChapter(zip, path) {
     try {
@@ -13,10 +11,17 @@ async function loadChapter(zip, path) {
 // sanitize the html, translate images, stylesheets etc to blobs
 async function sanitize(dirty, zip, path) {
     const doc = new DOMParser().parseFromString(dirty, 'text/html');
+    removeScripts(doc);
     await handleStylesheets(doc, zip, path);
     await handleImages(doc, zip, path);
     handleLinks(doc);
     return new XMLSerializer().serializeToString(doc);
+}
+
+function removeScripts(doc){
+    [...doc.querySelectorAll('script')].forEach((e)=> {
+        e.remove();
+    });
 }
 
 // sanitize <a> tags. remove all links and replace with underlined text.
@@ -87,7 +92,7 @@ function getPath(href, currentPath) {
     // current chapter
     let dirs = currentPath.split("/");
     dirs.pop(); // remove current html file
-    
+
     if (href.startsWith('../')) { // most common case
         while (href.startsWith('../')) {
             dirs.pop(); // step to next higher directory
@@ -96,7 +101,7 @@ function getPath(href, currentPath) {
         dirs.push(href);
         return dirs.join("/");
     }
-    else if(href.startsWith('/')){ // files are in the root
+    else if (href.startsWith('/')) { // files are in the root
         return href.slice(1);
     }
     else if (href.startsWith('./')) { // never seen this case but is theoretically possible
