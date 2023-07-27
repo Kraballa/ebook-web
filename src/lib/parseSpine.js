@@ -1,3 +1,6 @@
+import { book } from "./stores";
+import { ebookProto } from "./ebook";
+
 async function parseSpine(ebookZip) {
     let containerFile = await ebookZip.file("META-INF/container.xml").async("string");
 
@@ -13,6 +16,7 @@ async function parseSpine(ebookZip) {
 function parseChapterList(data, basePath) {
     let parser = new DOMParser();
     let doc = parser.parseFromString(data, "text/xml");
+    parseMetadata(doc);
     // get the chapter references in spine order
     let itemIds = [...doc.getElementsByTagName("itemref")].map((elem) => elem.getAttribute("idref"));
     let itemById = {};
@@ -25,6 +29,24 @@ function parseChapterList(data, basePath) {
     // map spine elements onto manifest elements
     // return list of file paths corresponding to chapters
     return itemIds.map((item) => itemById[item]);
+}
+
+function parseMetadata(document) {
+    let metadata = new ebookProto();
+    for (const elem of document.getElementsByTagName("metadata")[0].children) {
+        switch (elem.tagName) {
+            case 'dc:creator':
+                metadata.author.push(elem.innerHTML);
+                break;
+            case 'dc:title':
+                metadata.title.push(elem.innerHTML);
+                break;
+            case 'dc:publisher':
+                metadata.publisher = elem.innerHTML;
+                break;
+        }
+    }
+    book.set(metadata);
 }
 
 // item paths are relative to content file so extract base path
