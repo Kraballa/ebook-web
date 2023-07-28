@@ -37,7 +37,7 @@
         <Navigator bind:chapterIndex bind:epubChapters />
         <ProgressHint />
     {:else}
-        <Info/>
+        <Info />
     {/if}
 </div>
 

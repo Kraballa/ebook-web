@@ -1,8 +1,6 @@
 <h3>Description</h3>
 <div>
-    <it>ebook-web</it> is a minimal ebook reader for the browser. By keeping the feature scope minimal we can guarantee that
-    user extensions such as screen readers, custom stylings or web-based dictionaries like yomichan work and support many
-    browsers and platforms all while staying on a cool 113kb uncompressed size.
+    <it>ebook-web</it> is a minimal ebook reader for the browser.
 </div>
 <h3>Usage</h3>
 <div>
