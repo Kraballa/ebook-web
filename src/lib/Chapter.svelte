@@ -6,7 +6,6 @@
     export let chapterIndex = 0;
 
     let content = null;
-    let blobUrl = null;
 
     $: {
         if (epubZip !== null && epubChapters.length > 0 && chapterIndex > -1 && chapterIndex < epubChapters.length) {
@@ -17,10 +16,6 @@
     async function reloadContent() {
         content = await loadChapter(epubZip, epubChapters[chapterIndex]);
         console.log(epubChapters[chapterIndex]);
-        let blob = new Blob([content], {
-            type: "text/html",
-        });
-        blobUrl = URL.createObjectURL(blob);
     }
 
     function loaded() {
@@ -30,7 +25,7 @@
 </script>
 
 {#if content}
-    <iframe id="chapter" src={blobUrl} scrolling="no" title="chapter" on:load={loaded} />
+    <iframe id="chapter" srcdoc={content} scrolling="no" title="chapter" on:load={loaded} />
 {/if}
 
 <style>
