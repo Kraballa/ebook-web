@@ -6,22 +6,32 @@
     export let chapterIndex = 0;
 
     let content = null;
+    let innerWidth = 0;
+
+    $: if(innerWidth){
+        loaded();
+    }
 
     $: {
-        if (epubZip !== null && epubChapters.length > 0 && chapterIndex > -1 && chapterIndex < epubChapters.length) {
+        if (epubChapters.length > 0 && chapterIndex > -1) {
             reloadContent();
         }
     }
 
     async function reloadContent() {
+        console.log('loading content');
         content = await loadChapter(epubZip, epubChapters[chapterIndex]);
     }
 
     function loaded() {
         let iframe = document.getElementById("chapter");
-        iframe.style.height = iframe.contentWindow.document.documentElement.offsetHeight + "px";
+        if(iframe != null){
+            iframe.style.height = iframe.contentWindow.document.documentElement.offsetHeight + "px";
+        }
     }
 </script>
+
+<svelte:window bind:innerWidth={innerWidth}/>
 
 {#if content}
     <iframe id="chapter" srcdoc={content} scrolling="no" title="chapter" on:load={loaded} />
