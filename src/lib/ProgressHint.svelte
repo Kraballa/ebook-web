@@ -1,13 +1,12 @@
 <script>
-    let progress = 0;
-
+    let scrollPercent = 0;
     let scrollY = 0;
     let windowHeight = 0;
     let visible = true;
 
     $: {
         let roundedProgress = Math.round((100 * scrollY) / (document.body.scrollHeight - windowHeight));
-        progress = Math.min(Math.max(roundedProgress, 0), 100);
+        scrollPercent = Math.min(Math.max(roundedProgress, 0), 100);
     }
 
     function onKeyPress(e) {
@@ -20,7 +19,7 @@
 <svelte:window bind:scrollY bind:innerHeight={windowHeight} on:keypress|preventDefault={onKeyPress} />
 
 <div class="frame {visible ? '' : 'invis'}">
-    {progress}%
+    {scrollPercent}%
 </div>
 
 <style>
