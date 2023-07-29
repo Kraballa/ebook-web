@@ -15,7 +15,6 @@
 
     async function reloadContent() {
         content = await loadChapter(epubZip, epubChapters[chapterIndex]);
-        console.log(epubChapters[chapterIndex]);
     }
 
     function loaded() {
