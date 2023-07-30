@@ -22,6 +22,7 @@
     function closeFile() {
         epubZip = null;
         inputElement.value = "";
+        files = null;
     }
 
     async function loadFile(file) {
