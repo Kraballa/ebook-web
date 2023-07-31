@@ -1,9 +1,14 @@
 <script>
+    import { get } from "svelte/store";
+    import { saveBookmark } from "./bookmark";
+    import { book } from "./stores";
+
     export let chapterIndex = 0;
     export let epubChapters = [];
 
-    function toTop(){
+    function finalize(){
         window.scrollTo(0,0);
+        saveBookmark(get(book).title, chapterIndex);
     }
 
     function nextChapter() {
@@ -12,7 +17,7 @@
         } else if (chapterIndex < epubChapters.length - 1) {
             chapterIndex++;
         }
-        toTop();
+        finalize();
     }
 
     function previousChapter() {
@@ -21,7 +26,7 @@
         } else if (chapterIndex > 0) {
             chapterIndex--;
         }
-        toTop();
+        finalize();
     }
 </script>
 

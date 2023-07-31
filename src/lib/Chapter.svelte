@@ -13,13 +13,13 @@
     }
 
     $: {
-        if (epubChapters.length > 0 && chapterIndex > -1) {
+        if (chapterIndex > -1) {
             reloadContent();
         }
     }
 
     async function reloadContent() {
-        console.log('loading content');
+        console.log('loading', chapterIndex);
         content = await loadChapter(epubZip, epubChapters[chapterIndex]);
     }
 

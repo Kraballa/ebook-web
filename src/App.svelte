@@ -9,11 +9,10 @@
     let epubZip = null;
     let epubChapters = [];
     let chapterIndex = 0;
-
 </script>
 
 <div class="row bg">
-    <LoadEpub bind:epubZip bind:epubChapters bind:chapterIndex/>
+    <LoadEpub bind:epubZip bind:epubChapters bind:chapterIndex />
     {#if epubZip}
         <Spine bind:chapterIndex bind:epubChapters />
         <Navigator bind:chapterIndex bind:epubChapters />

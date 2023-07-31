@@ -1,6 +1,9 @@
 <script>
     import JSZip from "jszip";
     import { parseSpine } from "../lib/parseSpine";
+    import { getBookmark } from "./bookmark";
+    import { book } from "./stores";
+    import { get } from "svelte/store";
 
     export let chapterIndex = 0;
     export let epubZip = null;
@@ -26,12 +29,17 @@
     }
 
     async function loadFile(file) {
-        if(chapterIndex !== 0){
-            chapterIndex = 0;
-        }
         const buf = file.arrayBuffer();
         epubZip = await JSZip.loadAsync(buf);
         epubChapters = await parseSpine(epubZip);
+
+        let data = getBookmark(get(book).title);
+        if(data !== null){
+            chapterIndex = data.chapterIndex;
+        }
+        else{
+            chapterIndex = 0;
+        }
     }
 </script>
 
