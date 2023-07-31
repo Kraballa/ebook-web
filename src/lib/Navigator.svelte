@@ -1,14 +1,9 @@
 <script>
-    import { get } from "svelte/store";
-    import { saveBookmark } from "./bookmark";
-    import { book } from "./stores";
-
     export let chapterIndex = 0;
     export let epubChapters = [];
 
     function finalize(){
         window.scrollTo(0,0);
-        saveBookmark(get(book).title, chapterIndex);
     }
 
     function nextChapter() {

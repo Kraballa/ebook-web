@@ -1,6 +1,7 @@
 <script>
     import { ebookProto } from "./ebook";
     import { book } from "./stores";
+
     export let chapterIndex = 0;
     export let epubChapters = [];
 
@@ -10,7 +11,7 @@
 
 {#if epubChapters.length > 0}
     {#each epubChapters as _, i}
-        <input type="button" value={i+1} on:click={() => (chapterIndex = i)} class="{chapterIndex === i ? "highlight" : ""}"/>
+        <input type="button" value={i+1} on:click={() => chapterIndex = i} class="{chapterIndex === i ? "highlight" : ""}"/>
     {/each}
 
     <hr>
@@ -31,8 +32,6 @@
     {/if}
 
 {/if}
-
-
 
 <style>
     input {
