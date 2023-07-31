@@ -40,8 +40,6 @@
 <style>
     #chapter {
         width: 100%;
-        height: max-content;
         border: 0;
-        overflow-x: scroll;
     }
 </style>

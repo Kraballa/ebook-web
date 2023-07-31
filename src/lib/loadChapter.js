@@ -69,14 +69,16 @@ async function handleImages(doc, zip, path) {
         const blob = URL.createObjectURL(await file.async("blob"));
         if (isImg) {
             e.src = blob;
+            e.style.maxWidth = "100%";
+            e.style.height = "auto";
             return;
         }
 
         // we can't rewrite image.xlink:href so replace the image tag with an img one
         let newEle = doc.createElement('img');
         newEle.src = blob;
-        // fix image width and break out of parent svg to prevent styling issues.
-        newEle.style = "width: 100%;";
+        newEle.style.maxWidth = "100%";
+        newEle.style.height = "auto";
         if (e.parentNode.tagName.toLowerCase() === "svg") {
             e.parentNode.replaceWith(newEle);
         }
