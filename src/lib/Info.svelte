@@ -16,6 +16,11 @@
         bookmarkData = [];
         confirm = false;
     }
+
+    function clearBookmark(key){
+        localStorage.removeItem(key);
+        loadBookmarkData();
+    }
 </script>
 
 <h3>Description</h3>
@@ -49,7 +54,7 @@
             <tr>
                 <td>{bookmark.title}</td>
                 <td>chapter {bookmark.chapter + 1}</td>
-                <td>clear</td>
+                <td><button on:click={() => clearBookmark(bookmark.title)}>clear</button></td>
             </tr>
         {/each}
     </table>
@@ -64,7 +69,7 @@
 <style>
     div {
         text-align: justify;
-        margin-bottom: 12px;
+        margin-bottom: 6px;
     }
 
     .confirm {
@@ -80,15 +85,16 @@
         padding-bottom: 5px;
     }
 
+    th, td {
+        min-width: 6em;
+        padding-right: 12px;
+        text-indent: 6px;
+    }
+
     th {
-        text-indent: 10px;
-        background-color: #8b8b8b;
-        color: white;
+        background-color: #bebebe;
     }
 
-    tr:nth-child(even) {background-color: #f2f2f2;}
+    tr:nth-child(even) {background-color: #dbdbdb;}
 
-    td {
-        width: 33vw;
-    }
 </style>
