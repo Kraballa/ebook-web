@@ -90,7 +90,7 @@
     th, td {
         min-width: 6em;
         padding-right: 12px;
-        text-indent: 6px;
+        padding-left: 6px;
     }
 
     th {

@@ -16,7 +16,6 @@
     function closeFile() {
         file = null;
         files = null;
-        handleChange();
     }
 </script>
 

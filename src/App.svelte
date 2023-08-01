@@ -21,11 +21,10 @@
     let chapterContent = '';
 
     $: {
-        //loading ebook
         if(file !== null) {
             openEbook();
         }
-        else{ //close ebook
+        else{
             closeEbook();
         }
     }
@@ -47,7 +46,12 @@
             chapterIndex = data.chapterIndex;
         }
         else{
-            chapterIndex = 0;
+            if(chapterIndex === 0){
+                reloadContent(); // force reload because reactivity doesn't work
+            }
+            else{
+                chapterIndex = 0; // reactivity already causes reload
+            }
         }
     }
 
