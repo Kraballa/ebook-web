@@ -23,6 +23,8 @@
     }
 </script>
 
+<svelte:window on:load={loadBookmarkData} />
+
 <h3>Description</h3>
 <div>
     <it>ebook-web</it> is a minimal ebook reader for the browser. It can read .epub files and render images and styles. By
