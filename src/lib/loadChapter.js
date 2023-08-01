@@ -70,7 +70,6 @@ async function handleImages(doc, zip, path) {
         if (isImg) {
             e.src = blob;
             e.style.maxWidth = "100%";
-            e.style.height = "auto";
             return;
         }
 
@@ -78,7 +77,6 @@ async function handleImages(doc, zip, path) {
         let newEle = doc.createElement('img');
         newEle.src = blob;
         newEle.style.maxWidth = "100%";
-        newEle.style.height = "auto";
         if (e.parentNode.tagName.toLowerCase() === "svg") {
             e.parentNode.replaceWith(newEle);
         }
