@@ -12,6 +12,7 @@
     import { book } from "./lib/stores";
     import { loadChapter } from "./lib/loadChapter";
     import { calcScrollFromWindow, calcWindowFromScroll } from "./lib/scrollCalc";
+    import Styling from "./lib/Styling.svelte";
 
     let epubZip = null;
     let epubChapters = [];
@@ -22,6 +23,8 @@
     let scrollY = 0;
     let windowHeight = 0;
     let bookmarkScroll = -1;
+
+    let style = '';
 
     $: if (scrollY !== 0) {
         createBookmark();
@@ -52,7 +55,7 @@
     function handleCloseEbook() {
         epubZip = null;
         chapterContent = "";
-        window.scrollTo(0,0);
+        window.scrollTo(0, 0);
     }
 
     function handleChapterChange(event) {
@@ -83,13 +86,16 @@
     {#if epubZip}
         <Spine bind:chapterIndex bind:epubChapters on:chapterChange={handleChapterChange} />
         <Navigator bind:chapterIndex bind:epubChapters on:chapterChange={handleChapterChange} />
-        <Chapter bind:chapterContent on:iframeLoaded={handleIframeLoaded} />
+        <Chapter bind:chapterContent on:iframeLoaded={handleIframeLoaded} bind:style/>
         <Navigator bind:chapterIndex bind:epubChapters on:chapterChange={handleChapterChange} />
         <ProgressHint />
     {:else}
         <Info />
+        <Styling bind:style />
     {/if}
 </div>
+
+{@html ("<style>" + style + "</style>")}
 
 <style>
 </style>

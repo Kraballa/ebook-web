@@ -7,6 +7,10 @@
         bookmarkData = [];
         for (let i = 0; i < localStorage.length; i++) {
             let key = localStorage.key(i);
+            if(key.startsWith("_")){
+                continue;
+            }
+
             let data = JSON.parse(localStorage.getItem(key));
             bookmarkData.push({ title: key, chapter: data.chapterIndex, scroll: data.scroll });
         }

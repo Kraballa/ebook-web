@@ -7,7 +7,6 @@ async function parseSpine(ebookZip) {
     let parser = new DOMParser();
     let containerDoc = parser.parseFromString(containerFile, "text/xml");
     let contentFilePath = containerDoc.getElementsByTagName("rootfile")[0].getAttribute("full-path");
-
     let content = await ebookZip.file(contentFilePath).async("string");
     let folderPath = getBasePath(contentFilePath);
     return parseChapterList(content, folderPath);
