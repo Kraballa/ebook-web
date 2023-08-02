@@ -88,8 +88,7 @@
     }
 
     th, td {
-        min-width: 6em;
-        padding-right: 12px;
+        padding-right: 6px;
         padding-left: 6px;
     }
 
