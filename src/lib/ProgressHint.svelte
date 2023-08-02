@@ -1,12 +1,13 @@
 <script>
+    import {calcScrollFromWindow} from './scrollCalc.js';
+
     let scrollPercent = 0;
     let scrollY = 0;
     let windowHeight = 0;
     let visible = true;
 
     $: {
-        let roundedProgress = Math.round((100 * scrollY) / (document.body.scrollHeight - windowHeight));
-        scrollPercent = Math.min(Math.max(roundedProgress, 0), 100);
+        scrollPercent = calcScrollFromWindow(windowHeight, scrollY);
     }
 
     function onKeyPress(e) {
