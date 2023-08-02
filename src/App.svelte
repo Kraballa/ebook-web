@@ -12,68 +12,51 @@
     import { book } from "./lib/stores";
     import { loadChapter } from "./lib/loadChapter";
 
-    let file = null;
-
     let epubZip = null;
     let epubChapters = [];
     let chapterIndex = -1;
 
-    let chapterContent = '';
+    let chapterContent = "";
 
-    $: {
-        if(file !== null) {
-            openEbook();
-        }
-        else{
-            closeEbook();
-        }
-    }
+    async function handleOpenEbook(event) {
+        let file = event.detail.file;
+        if (file === null) return;
 
-    $: {
-        if (chapterIndex > -1) {
-            reloadContent();
-            saveBookmark(get(book).title, chapterIndex);
-        }
-    }
-
-    async function openEbook(){
         const buf = file.arrayBuffer();
         epubZip = await JSZip.loadAsync(buf);
         epubChapters = await parseSpine(epubZip);
 
         let data = getBookmark(get(book).title);
-        if(data !== null){
+        if (data !== null) {
             chapterIndex = data.chapterIndex;
         }
-        else{
-            if(chapterIndex === 0){
-                reloadContent(); // force reload because reactivity doesn't work
-            }
-            else{
-                chapterIndex = 0; // reactivity already causes reload
-            }
-        }
+        reloadContent();
+    }
+
+    function handleCloseEbook() {
+        epubZip = null;
+        chapterContent = "";
+    }
+
+    function handleChapterChange(event) {
+        reloadContent();
+        saveBookmark(get(book).title, chapterIndex);
+        window.scrollTo(0, 0);
     }
 
     async function reloadContent() {
-        console.log('loading chapterIdx', chapterIndex);
+        console.log("loading chapterIdx", chapterIndex);
         chapterContent = await loadChapter(epubZip, epubChapters[chapterIndex]);
     }
-
-    function closeEbook(){
-        epubZip = null;
-        chapterContent = '';
-    }
-
 </script>
 
 <div class="row bg">
-    <LoadEpub bind:file />
+    <LoadEpub on:ebookClosed={handleCloseEbook} on:fileSelected={handleOpenEbook} />
     {#if epubZip}
-        <Spine bind:chapterIndex bind:epubChapters />
-        <Navigator bind:chapterIndex bind:epubChapters />
+        <Spine bind:chapterIndex bind:epubChapters on:chapterChange={handleChapterChange} />
+        <Navigator bind:chapterIndex bind:epubChapters on:chapterChange={handleChapterChange} />
         <Chapter bind:chapterContent />
-        <Navigator bind:chapterIndex bind:epubChapters />
+        <Navigator bind:chapterIndex bind:epubChapters on:chapterChange={handleChapterChange} />
         <ProgressHint />
     {:else}
         <Info />

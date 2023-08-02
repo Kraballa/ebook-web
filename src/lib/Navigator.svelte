@@ -1,9 +1,13 @@
 <script>
+    import { createEventDispatcher } from "svelte";
+
     export let chapterIndex = 0;
     export let epubChapters = [];
 
+    const dispatch = createEventDispatcher();
+
     function finalize(){
-        window.scrollTo(0,0);
+        dispatch('chapterChange');
     }
 
     function nextChapter() {

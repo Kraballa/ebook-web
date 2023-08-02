@@ -1,4 +1,5 @@
 <script>
+    import { createEventDispatcher } from "svelte";
     import { ebookProto } from "./ebook";
     import { book } from "./stores";
 
@@ -7,11 +8,17 @@
 
     let metadata = new ebookProto();
     book.subscribe((val) => metadata = val);
+    const dispatch = createEventDispatcher();
+
+    function onChapterClick(idx){
+        chapterIndex = idx;
+        dispatch('chapterChange');
+    }
 </script>
 
 {#if epubChapters.length > 0}
     {#each epubChapters as _, i}
-        <input type="button" value={i+1} on:click={() => chapterIndex = i} class="{chapterIndex === i ? "highlight" : ""}"/>
+        <input type="button" value={i+1} on:click={() => onChapterClick(i)} class={chapterIndex === i ? "highlight" : ""}/>
     {/each}
 
     <hr>

@@ -1,11 +1,14 @@
 <script>
-    export let file = null;
+    import { createEventDispatcher } from "svelte";
 
     let files = null;
 
-    function handleChange(){
+    const dispatch = createEventDispatcher();
+
+    function handleChange() {
+        console.log('selected new file');
         if (files && files[0]) {
-            file = files[0];
+            dispatch("fileSelected", { file: files[0] });
         }
     }
 
@@ -14,16 +17,20 @@
     }
 
     function closeFile() {
-        file = null;
         files = null;
+        dispatch("ebookClosed");
+    }
+
+    function onClick(e){
+        e.target.value = '';
     }
 </script>
 
 <div style="margin-bottom: 5px;">
     <!--This is ugly but hides the even uglier file selected text-->
-    <input type="file" id="selectedFile" accept=".epub" style="display: none;" bind:files on:change={handleChange}/>
+    <input type="file" id="selectedFile" accept=".epub" style="display: none;" bind:files on:change={handleChange} on:click={onClick}/>
     <input type="button" value="open ebook" on:click={openFileClick} />
-    {#if file !== null}
+    {#if files !== null}
         <input type="button" value="close ebook" on:click={closeFile} />
     {/if}
     <a class="right" href="https://kraballa.net">home</a>
