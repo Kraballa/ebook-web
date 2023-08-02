@@ -1,8 +1,8 @@
 
-export function saveBookmark(bookTitle, chapterIndex) {
+export function saveBookmark(bookTitle, chapterIndex, scrollPercent) {
     if (chapterIndex === 0)
         return;
-    let data = { chapterIndex: chapterIndex, scroll: 0 };
+    let data = { chapterIndex: chapterIndex, scroll: scrollPercent };
     localStorage.setItem(bookTitle, JSON.stringify(data));
 }
 

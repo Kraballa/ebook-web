@@ -6,7 +6,6 @@
     const dispatch = createEventDispatcher();
 
     function handleChange() {
-        console.log('selected new file');
         if (files && files[0]) {
             dispatch("fileSelected", { file: files[0] });
         }

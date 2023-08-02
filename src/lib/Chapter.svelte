@@ -1,17 +1,26 @@
 <script>
+    import { createEventDispatcher } from "svelte";
+
     export let chapterContent = "";
 
     let innerWidth = 0;
 
+    const dispatch = createEventDispatcher();
+
     $: if (innerWidth) {
-        loaded();
+        resizeIframe();
     }
 
-    function loaded() {
+    function resizeIframe(){
         let iframe = document.getElementById("chapter");
         if (iframe != null) {
             iframe.style.height = iframe.contentWindow.document.documentElement.offsetHeight + "px";
         }
+    }
+
+    function loaded() {
+        resizeIframe();
+        dispatch('iframeLoaded');
     }
 </script>
 

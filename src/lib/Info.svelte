@@ -7,7 +7,8 @@
         bookmarkData = [];
         for (let i = 0; i < localStorage.length; i++) {
             let key = localStorage.key(i);
-            bookmarkData.push({ title: key, chapter: JSON.parse(localStorage.getItem(key)).chapterIndex });
+            let data = JSON.parse(localStorage.getItem(key));
+            bookmarkData.push({ title: key, chapter: data.chapterIndex, scroll: data.scroll });
         }
     }
 
@@ -55,7 +56,7 @@
         {#each bookmarkData as bookmark}
             <tr>
                 <td>{bookmark.title}</td>
-                <td>chapter {bookmark.chapter + 1}</td>
+                <td>chapter {bookmark.chapter + 1} ({bookmark.scroll ?? 0}%)</td>
                 <td><button on:click={() => clearBookmark(bookmark.title)}>clear</button></td>
             </tr>
         {/each}

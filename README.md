@@ -5,7 +5,7 @@ This project attempts to serve as an alternative to similar projects like calibr
 
 # roadmap:
 - [x] read epub files, display images, use styles
-- [ ] bookmarking system
+- [x] bookmarking system
 - [ ] settings interface
     - [ ] no styling (maybe allow custom styling rules)
     - [ ] no images
