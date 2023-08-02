@@ -18,7 +18,7 @@
         confirm = false;
     }
 
-    function clearBookmark(key){
+    function clearBookmark(key) {
         localStorage.removeItem(key);
         loadBookmarkData();
     }
@@ -42,9 +42,10 @@
     <li>P: toggle progress display (bottom right corner)</li>
 </ul>
 
-<button on:click={loadBookmarkData}>load bookmarks</button>
-
-{#if bookmarkData.length != 0}
+{#if bookmarkData.length === 0}
+    <button on:click={loadBookmarkData}>show bookmarks</button>
+{:else}
+    <button on:click={() => (bookmarkData = [])}>hide bookmarks</button>
     <h3>Bookmarks</h3>
 
     <table>
@@ -88,7 +89,8 @@
         padding-bottom: 5px;
     }
 
-    th, td {
+    th,
+    td {
         padding-right: 6px;
         padding-left: 6px;
     }
@@ -97,6 +99,7 @@
         background-color: #b1b0b0;
     }
 
-    tr:nth-child(odd) {background-color: #e6e6e6;}
-
+    tr:nth-child(odd) {
+        background-color: #e6e6e6;
+    }
 </style>
