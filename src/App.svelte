@@ -14,7 +14,7 @@
 
     let epubZip = null;
     let epubChapters = [];
-    let chapterIndex = -1;
+    let chapterIndex = 0;
 
     let chapterContent = "";
 
