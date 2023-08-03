@@ -4,22 +4,15 @@
     let scrollPercent = 0;
     let scrollY = 0;
     let windowHeight = 0;
-    let visible = true;
 
     $: {
         scrollPercent = calcScrollFromWindow(windowHeight, scrollY);
     }
-
-    function onKeyPress(e) {
-        if (e.key === "p") {
-            visible = !visible;
-        }
-    }
 </script>
 
-<svelte:window bind:scrollY bind:innerHeight={windowHeight} on:keypress|preventDefault={onKeyPress} />
+<svelte:window bind:scrollY bind:innerHeight={windowHeight} />
 
-<div class="frame {visible ? '' : 'invis'}">
+<div class="frame">
     {scrollPercent}%
 </div>
 
@@ -30,9 +23,5 @@
         right: 0;
         bottom: 0;
         color: gray;
-    }
-
-    div.invis {
-        visibility: hidden;
     }
 </style>

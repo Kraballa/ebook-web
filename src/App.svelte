@@ -98,4 +98,8 @@
 {@html ("<style>" + style + "</style>")}
 
 <style>
+
+:global(h3.small) {
+    margin-bottom: 4px;
+}
 </style>

@@ -17,12 +17,12 @@
     }
 
     const combinations = [
-        ["black", "white", "white"],
+        ["#000000", "#ffffff", "white"],
         ["#302e25", "#ffd596", "sepia"],
         ["#2b211e", "#b58b69", "dim"],
         ["#d1c68e", "#212121", "dark"],
         ["#7a7ca8", "#191829", "blue-dark"],
-        ["#a8a69d", "#000000", "oled"],
+        ["#ffffff", "#000000", "oled"],
     ];
 
     let idx;
@@ -30,7 +30,7 @@
     onLoad();
 </script>
 
-<h3>Style</h3>
+<h3 class="small">Style</h3>
 <div>Select a theme.</div>
 {#each combinations as comb, i}
     <label>
