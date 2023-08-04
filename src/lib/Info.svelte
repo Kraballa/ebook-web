@@ -1,13 +1,11 @@
 <script>
     let bookmarkData = [];
 
-    let confirm = false;
-
     function loadBookmarkData() {
         bookmarkData = [];
         for (let i = 0; i < localStorage.length; i++) {
             let key = localStorage.key(i);
-            if(key.startsWith("_")){
+            if (key.startsWith("_")) {
                 continue;
             }
 
@@ -16,15 +14,18 @@
         }
     }
 
-    function clearBookmarkData() {
-        localStorage.clear();
-        bookmarkData = [];
-        confirm = false;
+    function clearBookmark(key) {
+        if (window.confirm("Clear bookmark for '" + key + "'?")) {
+            localStorage.removeItem(key);
+            loadBookmarkData();
+        }
     }
 
-    function clearBookmark(key) {
-        localStorage.removeItem(key);
-        loadBookmarkData();
+    function clearAllBookmarks() {
+        if (window.confirm("Clear ALL bookmarks? This cannot be undone.")) {
+            localStorage.clear();
+            bookmarkData = [];
+        }
     }
 </script>
 
@@ -59,22 +60,13 @@
     </table>
 
     <br />
-    <button on:click={() => (confirm = !confirm)}>clear bookmarks</button>
-    {#if confirm}
-        <button class="confirm" on:click={clearBookmarkData}>confirm?</button>
-    {/if}
+    <button on:click={clearAllBookmarks}>clear bookmarks</button>
 {/if}
 
 <style>
     div {
         text-align: justify;
         margin-bottom: 6px;
-    }
-
-    .confirm {
-        color: rgb(223, 0, 0);
-        float: right;
-        border-color: red;
     }
 
     table,
