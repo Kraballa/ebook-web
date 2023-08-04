@@ -49,6 +49,9 @@
             chapterIndex = data.chapterIndex ?? 0;
             bookmarkScroll = data.scroll ?? -1;
         }
+        else{
+            chapterIndex = 0;
+        }
         reloadContent();
     }
 
