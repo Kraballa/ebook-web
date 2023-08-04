@@ -27,9 +27,9 @@
             bookmarkData = [];
         }
     }
-</script>
 
-<svelte:window on:load={loadBookmarkData} />
+    loadBookmarkData();
+</script>
 
 <h3 class="small">Description</h3>
 <div>
@@ -43,12 +43,8 @@
     chapter files. Embedded styles and images should appear automatically.
 </div>
 
-{#if bookmarkData.length === 0}
-    <button on:click={loadBookmarkData}>show bookmarks</button>
-{:else}
-    <button on:click={() => (bookmarkData = [])}>hide bookmarks</button>
+{#if bookmarkData.length !== 0}
     <h3 class="small">Bookmarks</h3>
-
     <table>
         {#each bookmarkData as bookmark}
             <tr>
@@ -58,7 +54,6 @@
             </tr>
         {/each}
     </table>
-
     <br />
     <button on:click={clearAllBookmarks}>clear bookmarks</button>
 {/if}
