@@ -49,11 +49,6 @@
     <h3 class="small">Bookmarks</h3>
 
     <table>
-        <tr>
-            <th>title</th>
-            <th>progress</th>
-            <th>clear</th>
-        </tr>
         {#each bookmarkData as bookmark}
             <tr>
                 <td>{bookmark.title}</td>
@@ -79,27 +74,11 @@
     .confirm {
         color: rgb(223, 0, 0);
         float: right;
+        border-color: red;
     }
 
     table,
-    th,
     td {
         text-align: left;
-        padding-top: 5px;
-        padding-bottom: 5px;
-    }
-
-    th,
-    td {
-        padding-right: 6px;
-        padding-left: 6px;
-    }
-
-    th {
-        background-color: #b1b0b0;
-    }
-
-    tr:nth-child(odd) {
-        background-color: #e6e6e6;
     }
 </style>
