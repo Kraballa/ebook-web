@@ -14,7 +14,7 @@ async function parseSpine(ebookZip) {
 
 function parseChapterList(data, basePath) {
     let parser = new DOMParser();
-    let doc = parser.parseFromString(data, "text/xml");
+    let doc = parser.parseFromString(data, "text/html");
     parseMetadata(doc);
     // get the chapter references in spine order
     let itemIds = [...doc.getElementsByTagName("itemref")].map((elem) => elem.getAttribute("idref"));

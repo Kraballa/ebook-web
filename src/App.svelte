@@ -91,24 +91,11 @@
 <div class="row bg">
     <LoadEpub on:ebookClosed={handleCloseEbook} on:fileSelected={handleOpenEbook} />
     {#if epubZip}
-        {#if epubChapters.length !== 0}
-            <Spine bind:chapterIndex bind:epubChapters on:chapterChange={handleChapterChange} />
-            <Navigator bind:chapterIndex bind:epubChapters on:chapterChange={handleChapterChange} />
-            <Chapter bind:chapterContent on:iframeLoaded={handleIframeLoaded} bind:style/>
-            <Navigator bind:chapterIndex bind:epubChapters on:chapterChange={handleChapterChange} />
-            <ProgressHint />
-        {:else}
-            <h3 class="small">unable to parse ebook spine</h3>
-            <div>
-                please report the issue on github. other ereader programs like calibre may still be able to read the file. alternatively you can also use calibre to fix the following issues and try again:
-            </div>
-            <ul>
-                <li>'utf-8' as an encoding for xml in 'content.opf', should be 'UTF-8'. both are technically valid but DOMparse can't read the lower case variant.</li>
-                <li>self-closing script tags (aka. "&lt;script/&gt;"), this is just invalid html and leads to an empty chapter page.</li>
-                <li>inconsistent casing for paths vs. actual location, they should be identical otherwise the file can't be found.</li>
-                <li>special characters being escaped in url's. not sure about the specification but probably should be avoided.</li>
-            </ul>
-        {/if}
+        <Spine bind:chapterIndex bind:epubChapters on:chapterChange={handleChapterChange} />
+        <Navigator bind:chapterIndex bind:epubChapters on:chapterChange={handleChapterChange} />
+        <Chapter bind:chapterContent on:iframeLoaded={handleIframeLoaded} bind:style/>
+        <Navigator bind:chapterIndex bind:epubChapters on:chapterChange={handleChapterChange} />
+        <ProgressHint />
     {:else}
         <Info />
         <Styling bind:style />
