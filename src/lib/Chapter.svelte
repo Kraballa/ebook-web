@@ -20,12 +20,12 @@
     }
 
     function loaded() {
-        resizeIframe();
-        dispatch('iframeLoaded');
         let iframe = document.getElementById('chapter');
         const styleElement = document.createElement("style");
         styleElement.textContent = style;
         iframe.contentDocument.head.appendChild(styleElement);
+        resizeIframe();
+        dispatch('iframeLoaded');
     }
 </script>
 
