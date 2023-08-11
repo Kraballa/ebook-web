@@ -32,16 +32,17 @@ function parseChapterList(data, basePath) {
 
 function parseMetadata(document) {
     let metadata = new ebookProto();
+
     for (const elem of document.getElementsByTagName("metadata")[0].children) {
         switch (elem.tagName.toLowerCase()) {
             case 'dc:creator':
-                metadata.author.push(elem.innerHTML);
+                metadata.author.push(elem.textContent);
                 break;
             case 'dc:title':
-                metadata.title.push(elem.innerHTML);
+                metadata.title.push(elem.textContent);
                 break;
             case 'dc:publisher':
-                metadata.publisher = elem.innerHTML;
+                metadata.publisher = elem.textContent;
                 break;
         }
     }
