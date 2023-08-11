@@ -10,7 +10,7 @@ async function loadChapter(zip, path) {
 
 // sanitize the html, translate images, stylesheets etc to blobs
 async function sanitize(dirty, zip, path) {
-    const doc = new DOMParser().parseFromString(dirty, 'text/html');
+    const doc = new DOMParser().parseFromString(dirty, 'application/xhtml+xml');
     removeScripts(doc);
     await handleStylesheets(doc, zip, path);
     await handleImages(doc, zip, path);
