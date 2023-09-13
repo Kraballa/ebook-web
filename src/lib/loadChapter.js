@@ -47,7 +47,8 @@ async function handleStylesheets(doc, zip, path) {
             return;
         }
 
-        const stylesheet = await file.async("blob");
+        const stylesheet = await file.async("string");
+        //stylesheet += "* { writing-mode: horizontal-tb; !important; -webkit-writing-mode: vertical-rl; !important; -epub-writing-mode: horizontal-tb; !important; }";
         e.href = URL.createObjectURL(stylesheet);
     }));
 }
