@@ -31,6 +31,8 @@
     loadBookmarkData();
 </script>
 
+<h2>E-Book Reader</h2>
+
 <h3 class="small">Description</h3>
 <div>
     <it>ebook-web</it> is a minimal ebook reader for the browser. It can read .epub files and render images and styles. By
@@ -39,12 +41,16 @@
 </div>
 <h3 class="small">Usage</h3>
 <div>
-    Simply <i>open ebook</i> and load up a .epub file. A list of numbered buttons should appear that represent the different
-    chapter files. Embedded styles and images should appear automatically.
+    Simply <i>open ebook</i> and load up a .epub file. A list of numbered buttons appear that represent the different
+    chapter files. Embedded styles and images appear automatically.
 </div>
 
+<h3 class="small">Bookmarks</h3>
+<div>
+    Bookmarks are created automatically. Reopening a book navigates to the last stored bookmark.
+</div>
 {#if bookmarkData.length !== 0}
-    <h3 class="small">Bookmarks</h3>
+<hr>
     <table>
         {#each bookmarkData as bookmark}
             <tr>
