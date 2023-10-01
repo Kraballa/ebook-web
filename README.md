@@ -8,3 +8,5 @@ This project attempts to serve as an alternative to similar projects like [calib
 - [x] bookmarking system
 - [x] color themes
 - [x] settings interface
+
+All planned features have been implemented.
