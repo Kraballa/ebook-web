@@ -32,9 +32,52 @@
 
 <h3 class="small">Style</h3>
 <div>Select a theme.</div>
-{#each combinations as comb, i}
-    <label>
-        <input type="radio" bind:group={idx} value={i} on:change={onClicked} />
-        {comb[2]}
-    </label>
+
+<table>
+    {#each combinations as comb, i}
+    <tr>
+        <td>
+            <label>
+                <input type="radio" bind:group={idx} value={i} on:change={onClicked} />
+                {comb[2]}
+            </label>
+        </td>
+        <td>
+            <p class="disp" style="background-color: {combinations[i][0]}"/>
+        </td>
+        <td>
+            <p class="disp" style="background-color: {combinations[i][1]}"/>
+        </td>
+    </tr>
 {/each}
+</table>
+
+
+<style>
+    table, tr, td{
+        border-spacing: 0;
+    }
+
+    td:first-child {
+        margin-right: 20px;
+        padding-right: 20px;
+    }
+    
+    td:nth-child(2) > p {
+        padding: 0;
+        border-radius: 5px 0 0 5px;
+    }
+
+    td:nth-child(3) > p {
+        padding: 0;
+        border-radius: 0 5px 5px 0;
+    }
+
+    p {
+        border: 1px black solid;
+        width: 20px;
+        height:20px;
+        padding: 0;
+        margin: 3px 0;
+    }
+</style>

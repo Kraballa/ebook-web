@@ -17,11 +17,6 @@
 </script>
 
 {#if epubChapters.length > 0}
-    {#each epubChapters as _, i}
-        <input type="button" value={i+1} on:click={() => onChapterClick(i)} class={chapterIndex === i ? "highlight" : ""}/>
-    {/each}
-
-    <hr>
     {#if metadata.title.length > 0}
         <h1>{metadata.title[0]}</h1>
     {/if}
@@ -36,8 +31,10 @@
         <h3>by {metadata.author.join(', ')}</h3>
         <h3>published by {metadata.publisher}</h3>
         <hr>
-    {/if}
-
+        {/if}
+    {#each epubChapters as _, i}
+        <input type="button" value={i+1} on:click={() => onChapterClick(i)} class={chapterIndex === i ? "highlight" : ""}/>
+    {/each}
 {/if}
 
 <style>
