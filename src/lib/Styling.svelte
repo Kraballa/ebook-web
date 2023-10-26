@@ -18,10 +18,10 @@
 
     const combinations = [
         ["#000000", "#ffffff", "white"],
-        ["#302e25", "#ffd596", "sepia"],
-        ["#2b211e", "#b58b69", "dim"],
-        ["#d1c68e", "#212121", "dark"],
-        ["#7a7ca8", "#191829", "blue-dark"],
+        ["#333", "#f5f5f5", "quiet light"],
+        ["#657b83", "#fdf6e3", "solarized light"],
+        ["#c5c8c6", "#1e1e1e", "monokai dimmed"],
+        ["#839496", "#002b36", "solarized dark"],
         ["#ffffff", "#000000", "oled"],
     ];
 
