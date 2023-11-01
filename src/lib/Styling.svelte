@@ -7,12 +7,10 @@
     }
 
     function onLoad() {
-        idx = 0;
         console.log("onload");
         let data = localStorage.getItem("_style");
         if (data != null) {
-            let id = parseInt(JSON.parse(data).id);
-            idx = parseInt(id);
+            idx = JSON.parse(data).id;
         }
     }
 
@@ -25,7 +23,7 @@
         ["#ffffff", "#000000", "oled"],
     ];
 
-    let idx;
+    let idx = 0;
 
     onLoad();
 </script>
@@ -54,7 +52,7 @@
 
 
 <style>
-    table, tr, td{
+    table, tr, td {
         border-spacing: 0;
     }
 
@@ -68,7 +66,7 @@
         border-radius: 5px 0 0 5px;
     }
 
-    td:nth-child(3) > p {
+    td:last-child > p {
         padding: 0;
         border-radius: 0 5px 5px 0;
     }
