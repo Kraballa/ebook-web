@@ -39,23 +39,17 @@
     having minimal dependencies and keeping the scope small we can easily support many browsers and devices while respecting
     user modifications like dark mode, yomichan or tts/screen reader extensions.
 </div>
-<h3 class="small">Usage</h3>
-<div>
-    Simply <i>open ebook</i> and load up a .epub file. A list of numbered buttons appear that represent the different
-    chapter files. Embedded styles and images appear automatically.
-</div>
 
 <h3 class="small">Bookmarks</h3>
-<div>
-    Bookmarks are created automatically. Reopening a book navigates to the last stored bookmark.
-</div>
+<div>Bookmarks are created automatically. Reopening a book navigates to the last stored bookmark.</div>
 {#if bookmarkData.length !== 0}
-<hr>
+    <hr />
     <table>
         {#each bookmarkData as bookmark}
             <tr>
                 <td>{bookmark.title}</td>
-                <td>chapter {bookmark.chapter + 1} ({bookmark.scroll ?? 0}%)</td>
+                <td>ch. {bookmark.chapter + 1}</td>
+                <td>{bookmark.scroll ?? 0}%</td>
                 <td><button on:click={() => clearBookmark(bookmark.title)}>clear</button></td>
             </tr>
         {/each}
@@ -70,8 +64,7 @@
         margin-bottom: 6px;
     }
 
-    table,
     td {
-        text-align: left;
+        padding: 8px;
     }
 </style>

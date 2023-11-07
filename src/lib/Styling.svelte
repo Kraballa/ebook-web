@@ -7,7 +7,6 @@
     }
 
     function onLoad() {
-        console.log("onload");
         let data = localStorage.getItem("_style");
         if (data != null) {
             idx = JSON.parse(data).id;
