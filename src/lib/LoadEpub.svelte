@@ -28,7 +28,6 @@
     function acceptFile(e) {
         const { acceptedFiles } = e.detail;
         files = acceptedFiles;
-        console.log(e);
         handleChange();
     }
 </script>
