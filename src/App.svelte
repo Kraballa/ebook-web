@@ -86,7 +86,13 @@
     }
 </script>
 
-<svelte:window bind:scrollY bind:innerHeight={windowHeight} />
+<svelte:window bind:scrollY bind:innerHeight={windowHeight}/>
+
+<svelte:head>
+    <title>
+        {epubZip ? "Ebook: " + $book.title[0] ?? "Ebook Reader" : "Ebook Reader"}
+    </title>
+</svelte:head>
 
 <div class="row bg">
     <LoadEpub on:ebookClosed={handleCloseEbook} on:fileSelected={handleOpenEbook} />
