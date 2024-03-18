@@ -1,6 +1,6 @@
 <script>
     export let style = "";
-    $: style = "html { background-color: " + combinations[idx ?? 0][1] + "; color: " + combinations[idx ?? 0][0] + "; }";
+    $: style = "html { background-color: " + combinations[idx ?? 0][1] + " !important; color: " + combinations[idx ?? 0][0] + " !important;} body { font-family: sans-serif !important;} p { text-align: justify !important; }";
 
     function onClicked() {
         localStorage.setItem("_style", JSON.stringify({ id: idx }));
